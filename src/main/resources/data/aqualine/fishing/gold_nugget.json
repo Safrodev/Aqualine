@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "item": "minecraft:gold_nugget",
+  "rarity": "uncommon",
+  "count": {
+    "min": 1,
+    "max": 4
+  }
+}
