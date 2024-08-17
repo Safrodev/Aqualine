@@ -1,0 +1,6 @@
+{
+    "parent": "item/fishing_rod",
+    "textures": {
+        "layer0": "aqualine:item/frozen_rod_cast"
+    }
+}

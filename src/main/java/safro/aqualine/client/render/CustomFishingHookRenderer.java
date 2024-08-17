@@ -54,7 +54,7 @@ public class CustomFishingHookRenderer extends EntityRenderer<CustomFishingHook>
             PoseStack.Pose posestack$pose1 = poseStack.last();
 
             for(int j = 0; j <= 16; ++j) {
-                stringVertex(f2, f3, f4, vertexconsumer1, posestack$pose1, fraction(j, 16), fraction(j + 1, 16));
+                stringVertex(f2, f3, f4, vertexconsumer1, posestack$pose1, fraction(j, 16), fraction(j + 1, 16), entity.lineColor);
             }
 
             poseStack.popPose();
@@ -94,7 +94,7 @@ public class CustomFishingHookRenderer extends EntityRenderer<CustomFishingHook>
         consumer.addVertex(pose, x - 0.5F, (float)y - 0.5F, 0.0F).setColor(-1).setUv((float)u, (float)v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(packedLight).setNormal(pose, 0.0F, 1.0F, 0.0F);
     }
 
-    private static void stringVertex(float x, float y, float z, VertexConsumer consumer, PoseStack.Pose pose, float stringFraction, float nextStringFraction) {
+    private static void stringVertex(float x, float y, float z, VertexConsumer consumer, PoseStack.Pose pose, float stringFraction, float nextStringFraction, int color) {
         float f = x * stringFraction;
         float f1 = y * (stringFraction * stringFraction + stringFraction) * 0.5F + 0.25F;
         float f2 = z * stringFraction;
@@ -105,7 +105,7 @@ public class CustomFishingHookRenderer extends EntityRenderer<CustomFishingHook>
         f3 /= f6;
         f4 /= f6;
         f5 /= f6;
-        consumer.addVertex(pose, f, f1, f2).setColor(-16777216).setNormal(pose, f3, f4, f5);
+        consumer.addVertex(pose, f, f1, f2).setColor(color).setNormal(pose, f3, f4, f5);
     }
 
     @Override

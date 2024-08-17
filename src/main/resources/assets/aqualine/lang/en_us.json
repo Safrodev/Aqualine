@@ -1,10 +1,15 @@
 {
+  "itemGroup.aqualine": "Aqualine",
+
   "item.aqualine.steel_rod": "Steel Rod",
+  "item.aqualine.frozen_rod": "Frozen Rod",
+  "item.aqualine.crystal_rod": "Crystal Rod",
 
   "aqualine.fishing_speed": "Fishing Speed",
 
   "text.aqualine.level_up": "Congrats! You are now Fishing Level %s",
   "text.aqualine.fish_xp": "Fishing XP: %s/%s",
+  "text.aqualine.frozen_rod": "§3+2 Fishing Speed §7in Cold Biomes",
 
   "command.aqualine.get_level": "You are level %s (%s/%s)",
   "command.aqualine.set_level": "Set %s player(s) to fishing level %s"

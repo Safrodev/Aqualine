@@ -12,6 +12,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import safro.aqualine.client.render.CustomFishingHookRenderer;
 import safro.aqualine.registry.EntityRegistry;
+import safro.aqualine.registry.ItemRegistry;
 
 @EventBusSubscriber(modid = Aqualine.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class AqualineClient {
@@ -24,7 +25,7 @@ public class AqualineClient {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-
+            rodProperty(ItemRegistry.STEEL_ROD.get());
         });
     }
 

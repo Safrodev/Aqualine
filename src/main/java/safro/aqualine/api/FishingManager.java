@@ -37,35 +37,37 @@ public class FishingManager {
 
     public static boolean handleRandomFish(ServerLevel level, Player player, CustomFishingHook hook) {
         if (!LOOT.isEmpty() && !ENTITIES.isEmpty()) {
-            FishingHookPredicate predicate = FishingHookPredicate.inOpenWater(true);
-//            if (predicate.matches(hook, level, null)) {
-                FishResult result = selectRandom(level.getRandom());
-                if (result != null) {
-                    result.execute(level, player, hook);
-                    player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX(), player.getY() + 0.5, player.getZ() + 0.5, hook.getRandom().nextInt(6) + 1));
-                    FishingLevel.onFish(player);
-                    return true;
-                }
-//            }
+            FishResult result = selectRandom(level.getRandom(), hook.luck);
+            if (result != null) {
+                result.execute(level, player, hook);
+                player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX(), player.getY() + 0.5, player.getZ() + 0.5, hook.getRandom().nextInt(6) + 1));
+                FishingLevel.onFish(player);
+                return true;
+            }
         }
         return false;
     }
 
     @Nullable
-    public static FishResult selectRandom(RandomSource random) {
-        float entityWeight = (float)AqualineConfig.baseEntityChance / 100.0F;
+    public static FishResult selectRandom(RandomSource random, int luck) {
+        float entityWeight = (float) AqualineConfig.baseEntityChance / 100.0F;
         if (random.nextFloat() < entityWeight) {
-            Optional<EntityFishResult> optional = selectRandomFrom(ENTITIES, random);
+            Optional<EntityFishResult> optional = selectRandomFrom(ENTITIES, random, luck);
             return optional.orElse(null);
         } else {
-            Optional<ItemFishResult> optional = selectRandomFrom(LOOT, random);
+            Optional<ItemFishResult> optional = selectRandomFrom(LOOT, random, luck);
             return optional.orElse(null);
         }
     }
 
-    private static <T extends FishResult> Optional<T> selectRandomFrom(List<T> list, RandomSource random) {
+    private static <T extends FishResult> Optional<T> selectRandomFrom(List<T> list, RandomSource random, int luck) {
         SimpleWeightedRandomList.Builder<T> builder = SimpleWeightedRandomList.builder();
-        list.forEach(result -> builder.add(result, result.getRarity().getWeight()));
+        list.forEach(result -> builder.add(result, getWeight(result, luck)));
         return builder.build().getRandomValue(random);
+    }
+
+    private static int getWeight(FishResult result, int luck) {
+        int base = result.getRarity().getWeight();
+        return (result.getRarity().equals(FishResult.Rarity.RARE) || result.getRarity().equals(FishResult.Rarity.LEGENDARY)) ? base + (luck * 3) : base;
     }
 }

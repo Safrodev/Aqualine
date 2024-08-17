@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -58,10 +59,11 @@ public class CustomFishingHook extends FishingHook {
     @Nullable
     private Entity hookedIn;
     private FishHookState currentState;
-    private final int luck;
+    public final int luck;
     private final int lureSpeed;
+    public int lineColor;
 
-    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed) {
+    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed, int color) {
         super(entityType, level);
         this.syncronizedRandom = RandomSource.create();
         this.openWater = true;
@@ -69,14 +71,15 @@ public class CustomFishingHook extends FishingHook {
         this.noCulling = true;
         this.luck = Math.max(0, luck);
         this.lureSpeed = Math.max(0, lureSpeed);
+        this.lineColor = color;
     }
 
     public CustomFishingHook(EntityType<? extends CustomFishingHook> entityType, Level level) {
-        this(entityType, level, 0, 0);
+        this(entityType, level, 0, 0, FastColor.ARGB32.color(0, 0, 0));
     }
 
-    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed) {
-        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed);
+    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed, int color) {
+        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed, color);
         this.setOwner(player);
         float f = player.getXRot();
         float f1 = player.getYRot();
@@ -119,7 +122,10 @@ public class CustomFishingHook extends FishingHook {
             }
         }
 
-        super.onSyncedDataUpdated(key);
+        // From Entity.class
+        if (DATA_POSE.equals(key)) {
+            this.refreshDimensions();
+        }
     }
 
     @Override
@@ -259,7 +265,6 @@ public class CustomFishingHook extends FishingHook {
         if (!this.level().isClientSide) {
             this.setHookedEntity(result.getEntity());
         }
-
     }
 
     protected void onHitBlock(BlockHitResult result) {
@@ -410,9 +415,11 @@ public class CustomFishingHook extends FishingHook {
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
+        compound.putInt("LineColor", this.lineColor);
     }
 
     public void readAdditionalSaveData(CompoundTag compound) {
+        this.lineColor = compound.getInt("LineColor");
     }
 
     public int retrieve(ItemStack stack) {
@@ -425,7 +432,6 @@ public class CustomFishingHook extends FishingHook {
                 this.level().broadcastEntityEvent(this, (byte)31);
                 i = this.hookedIn instanceof ItemEntity ? 3 : 5;
             } else if (this.nibble > 0) {
-                Aqualine.LOGGER.info("Handling Fish");
                 FishingManager.handleRandomFish((ServerLevel) this.level(), player, this);
                 i = 1;
             }
