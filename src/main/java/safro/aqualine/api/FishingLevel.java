@@ -16,7 +16,7 @@ import safro.aqualine.Aqualine;
 import safro.aqualine.AqualineConfig;
 
 public class FishingLevel implements INBTSerializable<CompoundTag> {
-    private static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "fishing_level");
+    private static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "fishing_level_boost");
     private int level;
     private int xpToNext;
     private int xp;
@@ -33,7 +33,7 @@ public class FishingLevel implements INBTSerializable<CompoundTag> {
             data.xp++;
             if (data.xp >= data.xpToNext) {
                 data.level++;
-                data.xpToNext = 6 * (int)Math.sqrt(data.xp);
+                data.xpToNext = calcXP(data.level);
                 data.xp = 0;
                 player.sendSystemMessage(Component.translatable("text.aqualine.level_up", data.level).withStyle(ChatFormatting.GREEN));
                 player.playNotifySound(SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -52,12 +52,25 @@ public class FishingLevel implements INBTSerializable<CompoundTag> {
         current.getData(Aqualine.FISHING_LEVEL).xpToNext = prev.xpToNext;
     }
 
+    public static int calcXP(int level) {
+        return (int)Math.floor(6 + Math.pow(level, 1.75));
+    }
+
     public void updateHealthBonus(Player player) {
-        int hearts = this.level % 5;
+        int hearts = this.level / 5;
         if (hearts > 0) {
             AttributeModifier modifier = new AttributeModifier(MODIFIER_ID, 2.0 * hearts, AttributeModifier.Operation.ADD_VALUE);
             player.getAttribute(Attributes.MAX_HEALTH).addOrReplacePermanentModifier(modifier);
+            player.setHealth(player.getHealth());
+        } else {
+            player.getAttribute(Attributes.MAX_HEALTH).removeModifier(MODIFIER_ID);
         }
+    }
+
+    public void setTo(int level) {
+        this.level = level;
+        this.xp = 0;
+        this.xpToNext = calcXP(level);
     }
 
     @Override
@@ -78,5 +91,13 @@ public class FishingLevel implements INBTSerializable<CompoundTag> {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public int getXpToNext() {
+        return xpToNext;
     }
 }

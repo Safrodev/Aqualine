@@ -12,9 +12,12 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.slf4j.Logger;
+import safro.aqualine.api.FishingAttributes;
 import safro.aqualine.api.FishingLevel;
 import safro.aqualine.event.CommonEvents;
 import safro.aqualine.network.NetworkHandler;
+import safro.aqualine.registry.EntityRegistry;
+import safro.aqualine.registry.ItemRegistry;
 
 import java.util.function.Supplier;
 
@@ -28,9 +31,14 @@ public class Aqualine {
     public Aqualine(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(NetworkHandler::register);
-        NeoForge.EVENT_BUS.addListener(EventPriority.LOW, CommonEvents::onFish);
+        modEventBus.addListener(FishingAttributes::applyAttributes);
+
+//        NeoForge.EVENT_BUS.addListener(EventPriority.LOW, CommonEvents::onFish);
 
         ATTACHMENT_TYPES.register(modEventBus);
+        FishingAttributes.ATTRIBUTES.register(modEventBus);
+        EntityRegistry.ENTITIES.register(modEventBus);
+        ItemRegistry.ITEMS.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, AqualineConfig.SPEC);
     }

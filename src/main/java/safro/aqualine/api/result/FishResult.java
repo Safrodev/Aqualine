@@ -3,6 +3,7 @@ package safro.aqualine.api.result;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import safro.aqualine.entity.CustomFishingHook;
 
 public abstract class FishResult {
     private final Rarity rarity;
@@ -21,7 +22,7 @@ public abstract class FishResult {
      * @param player - Catcher
      * @param hook - The fishing hook used
      */
-    public abstract void execute(ServerLevel world, Player player, FishingHook hook);
+    public abstract void execute(ServerLevel world, Player player, CustomFishingHook hook);
 
     public Rarity getRarity() {
         return rarity;

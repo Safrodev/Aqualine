@@ -5,6 +5,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import safro.aqualine.Aqualine;
+import safro.aqualine.entity.CustomFishingHook;
 
 public class EntityFishResult extends FishResult {
     private final EntityType<?> entityType;
@@ -15,7 +16,7 @@ public class EntityFishResult extends FishResult {
     }
 
     @Override
-    public void execute(ServerLevel world, Player player, FishingHook hook) {
+    public void execute(ServerLevel world, Player player, CustomFishingHook hook) {
         Entity entity = entityType.create(world);
         if (entity instanceof LivingEntity living) {
             living.moveTo(hook.getX(), hook.getY() + 1.0, hook.getZ(), player.yHeadRot + 180.0F, 0.0F);
