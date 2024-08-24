@@ -37,7 +37,7 @@ public class FishingManager {
 
     public static boolean handleRandomFish(ServerLevel level, Player player, CustomFishingHook hook) {
         if (!LOOT.isEmpty() && !ENTITIES.isEmpty()) {
-            FishResult result = selectRandom(level.getRandom(), hook.luck);
+            FishResult result = selectRandom(level.getRandom(), hook.luck, hook.entityBonus);
             if (result != null) {
                 result.execute(level, player, hook);
                 player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX(), player.getY() + 0.5, player.getZ() + 0.5, hook.getRandom().nextInt(6) + 1));
@@ -49,8 +49,8 @@ public class FishingManager {
     }
 
     @Nullable
-    public static FishResult selectRandom(RandomSource random, int luck) {
-        float entityWeight = (float) AqualineConfig.baseEntityChance / 100.0F;
+    public static FishResult selectRandom(RandomSource random, int luck, int entityBonus) {
+        float entityWeight = (float)(AqualineConfig.baseEntityChance + entityBonus) / 100.0F;
         if (random.nextFloat() < entityWeight) {
             Optional<EntityFishResult> optional = selectRandomFrom(ENTITIES, random, luck);
             return optional.orElse(null);

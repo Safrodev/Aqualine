@@ -9,14 +9,17 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ItemAbilities;
+import safro.aqualine.Aqualine;
 import safro.aqualine.entity.CustomFishingHook;
 
 @OnlyIn(Dist.CLIENT)
@@ -105,7 +108,7 @@ public class CustomFishingHookRenderer extends EntityRenderer<CustomFishingHook>
         f3 /= f6;
         f4 /= f6;
         f5 /= f6;
-        consumer.addVertex(pose, f, f1, f2).setColor(color).setNormal(pose, f3, f4, f5);
+        consumer.addVertex(pose, f, f1, f2).setColor(FastColor.ARGB32.red(color), FastColor.ARGB32.green(color), FastColor.ARGB32.blue(color), 255).setNormal(pose, f3, f4, f5);
     }
 
     @Override

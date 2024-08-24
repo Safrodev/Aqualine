@@ -50,6 +50,7 @@ public class CustomFishingHook extends FishingHook {
     private int outOfWaterTime;
     private static final EntityDataAccessor<Integer> DATA_HOOKED_ENTITY = SynchedEntityData.defineId(CustomFishingHook.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_BITING = SynchedEntityData.defineId(CustomFishingHook.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> LINE_COLOR = SynchedEntityData.defineId(CustomFishingHook.class, EntityDataSerializers.INT);
     private int life;
     private int nibble;
     private int timeUntilLured;
@@ -61,9 +62,10 @@ public class CustomFishingHook extends FishingHook {
     private FishHookState currentState;
     public final int luck;
     private final int lureSpeed;
+    public final int entityBonus;
     public int lineColor;
 
-    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed, int color) {
+    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed, int entityBonus, int color) {
         super(entityType, level);
         this.syncronizedRandom = RandomSource.create();
         this.openWater = true;
@@ -71,15 +73,16 @@ public class CustomFishingHook extends FishingHook {
         this.noCulling = true;
         this.luck = Math.max(0, luck);
         this.lureSpeed = Math.max(0, lureSpeed);
+        this.entityBonus = Math.max(0, entityBonus);
         this.lineColor = color;
     }
 
     public CustomFishingHook(EntityType<? extends CustomFishingHook> entityType, Level level) {
-        this(entityType, level, 0, 0, FastColor.ARGB32.color(0, 0, 0));
+        this(entityType, level, 0, 0, 0, FastColor.ARGB32.color(0, 0, 0));
     }
 
-    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed, int color) {
-        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed, color);
+    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed, int entityBonus, int color) {
+        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed, entityBonus, color);
         this.setOwner(player);
         float f = player.getXRot();
         float f1 = player.getYRot();
@@ -106,6 +109,7 @@ public class CustomFishingHook extends FishingHook {
         super.defineSynchedData(builder);
         builder.define(DATA_HOOKED_ENTITY, 0);
         builder.define(DATA_BITING, false);
+        builder.define(LINE_COLOR, this.lineColor);
     }
 
     @Override
@@ -120,6 +124,10 @@ public class CustomFishingHook extends FishingHook {
             if (this.biting) {
                 this.setDeltaMovement(this.getDeltaMovement().x, -0.4F * Mth.nextFloat(this.syncronizedRandom, 0.6F, 1.0F), this.getDeltaMovement().z);
             }
+        }
+
+        if (LINE_COLOR.equals(key)) {
+            this.lineColor = this.getEntityData().get(LINE_COLOR);
         }
 
         // From Entity.class
@@ -139,7 +147,11 @@ public class CustomFishingHook extends FishingHook {
 
     public void tick() {
         this.syncronizedRandom.setSeed(this.getUUID().getLeastSignificantBits() ^ this.level().getGameTime());
-        super.tick();
+        this.baseTick(); // avoid calling FishingHook::tick
+        if (!this.level().isClientSide) {
+            this.getEntityData().set(LINE_COLOR, this.lineColor);
+        }
+
         Player player = this.getPlayerOwner();
         if (player == null) {
             this.discard();
@@ -361,7 +373,7 @@ public class CustomFishingHook extends FishingHook {
                     this.timeUntilHooked = Mth.nextInt(this.random, 20, 80);
                 }
             } else {
-                this.timeUntilLured = Mth.nextInt(this.random, 200, 800);
+                this.timeUntilLured = Mth.nextInt(this.random, 200, 650);
                 this.timeUntilLured -= this.lureSpeed;
             }
         }

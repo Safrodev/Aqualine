@@ -36,18 +36,28 @@ public class AqualineRodItem extends FishingRodItem {
     @Nullable
     private final TagKey<Biome> biomeBonus;
     private final int speedBonus;
+    private final int entityBonus;
     private final String tooltipKey;
 
     public AqualineRodItem(Properties properties) {
         this(properties, null, -1, "", FastColor.ARGB32.color(0, 0, 0));
     }
 
+    public AqualineRodItem(Properties properties, int color) {
+        this(properties, null, -1, "", color);
+    }
+
     public AqualineRodItem(Properties properties, @Nullable TagKey<Biome> biomeBonus, int speedBonus, String tooltip, int color) {
+        this(properties, biomeBonus, speedBonus, 0, tooltip, color);
+    }
+
+    public AqualineRodItem(Properties properties, @Nullable TagKey<Biome> biomeBonus, int speedBonus, int entityBonus, String tooltip, int color) {
         super(properties);
         this.biomeBonus = biomeBonus;
         this.speedBonus = speedBonus;
         this.tooltipKey = tooltip;
         this.lineColor = color;
+        this.entityBonus = entityBonus;
     }
 
     @Override
@@ -71,7 +81,7 @@ public class AqualineRodItem extends FishingRodItem {
                 ServerLevel serverlevel = (ServerLevel)level;
                 int j = this.getFishingSpeed(player);
                 int k = EnchantmentHelper.getFishingLuckBonus(serverlevel, itemstack, player) + (int)player.getLuck();
-                level.addFreshEntity(new CustomFishingHook(player, level, k, j, this.lineColor));
+                level.addFreshEntity(new CustomFishingHook(player, level, k, j, this.entityBonus, this.lineColor));
             }
 
             player.awardStat(Stats.ITEM_USED.get(this));
@@ -94,7 +104,7 @@ public class AqualineRodItem extends FishingRodItem {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        if (this.biomeBonus != null) {
+        if (!this.tooltipKey.isEmpty()) {
             tooltip.add(Component.translatable(this.tooltipKey));
         }
     }

@@ -3,8 +3,8 @@ package safro.aqualine.api.result;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import safro.aqualine.Aqualine;
+import safro.aqualine.api.Fishable;
 import safro.aqualine.entity.CustomFishingHook;
 
 public class EntityFishResult extends FishResult {
@@ -27,7 +27,11 @@ public class EntityFishResult extends FishResult {
             if (living instanceof Mob mob) {
                 mob.finalizeSpawn(world, world.getCurrentDifficultyAt(hook.blockPosition()), MobSpawnType.NATURAL, null);
             }
+
             world.addFreshEntity(living);
+            if (living instanceof Fishable fishable) {
+                fishable.onFished(world, player);
+            }
         } else {
             Aqualine.LOGGER.error("Unable to fish non-living entity of type: " + entityType);
         }
