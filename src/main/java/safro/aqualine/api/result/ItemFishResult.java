@@ -9,12 +9,12 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
+import safro.aqualine.Aqualine;
 import safro.aqualine.entity.CustomFishingHook;
 
 public class ItemFishResult extends FishResult {
@@ -32,6 +32,10 @@ public class ItemFishResult extends FishResult {
     @Override
     public void execute(ServerLevel world, Player player, CustomFishingHook hook) {
         ItemStack stack = this.getStack(world);
+        if (hook.doubled && player.getRandom().nextFloat() < 0.4F) {
+            Aqualine.LOGGER.info("Doubled shiny bait");
+            stack.setCount(stack.getCount() * 2);
+        }
         ItemFishedEvent event = new ItemFishedEvent(NonNullList.of(ItemStack.EMPTY, stack), hook.onGround() ? 2 : 1, hook);
         NeoForge.EVENT_BUS.post(event);
 

@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.FishingAttributes;
 import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.registry.ItemRegistry;
 
 import java.util.List;
 
@@ -80,8 +81,8 @@ public class AqualineRodItem extends FishingRodItem {
             if (level instanceof ServerLevel) {
                 ServerLevel serverlevel = (ServerLevel)level;
                 int j = this.getFishingSpeed(player);
-                int k = EnchantmentHelper.getFishingLuckBonus(serverlevel, itemstack, player) + (int)player.getLuck();
-                level.addFreshEntity(new CustomFishingHook(player, level, k, j, this.entityBonus, this.lineColor));
+                int k = this.getFishingLuck(serverlevel, itemstack, player);
+                level.addFreshEntity(new CustomFishingHook(player, level, k, j, this.entityBonus, BaitItem.searchAndConsume(ItemRegistry.SHINY_BAIT.get(), player), this.lineColor));
             }
 
             player.awardStat(Stats.ITEM_USED.get(this));
@@ -92,13 +93,21 @@ public class AqualineRodItem extends FishingRodItem {
     }
 
     private int getFishingSpeed(Player player) {
-        int base = (int)(player.getAttributeValue(FishingAttributes.FISHING_SPEED) * 20.0F);
+        int speed = (int)(player.getAttributeValue(FishingAttributes.FISHING_SPEED) * 20.0F);
         if (this.biomeBonus != null) {
             if (player.level().getBiome(player.getOnPos()).is(this.biomeBonus)) {
-                return base + this.speedBonus;
+                speed += this.speedBonus;
             }
         }
-        return base;
+        return BaitItem.searchAndConsume(ItemRegistry.SWEET_BAIT.get(), player) ? speed + 1 : speed;
+    }
+
+    private int getFishingLuck(ServerLevel serverlevel, ItemStack itemstack, Player player) {
+        int luck = EnchantmentHelper.getFishingLuckBonus(serverlevel, itemstack, player) + (int)player.getLuck();
+        if (BaitItem.searchAndConsume(ItemRegistry.SHADOW_BAIT.get(), player) && serverlevel.isNight()) {
+            luck *= 2;
+        }
+        return luck;
     }
 
     @Override

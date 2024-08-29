@@ -26,6 +26,9 @@ public class AqualineClient {
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             rodProperty(ItemRegistry.STEEL_ROD.get());
+            rodProperty(ItemRegistry.FROZEN_ROD.get());
+            rodProperty(ItemRegistry.CRYSTAL_ROD.get());
+            rodProperty(ItemRegistry.UNDEAD_ROD.get());
         });
     }
 

@@ -63,9 +63,10 @@ public class CustomFishingHook extends FishingHook {
     public final int luck;
     private final int lureSpeed;
     public final int entityBonus;
+    public final boolean doubled;
     public int lineColor;
 
-    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed, int entityBonus, int color) {
+    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed, int entityBonus, boolean doubled, int color) {
         super(entityType, level);
         this.syncronizedRandom = RandomSource.create();
         this.openWater = true;
@@ -74,15 +75,16 @@ public class CustomFishingHook extends FishingHook {
         this.luck = Math.max(0, luck);
         this.lureSpeed = Math.max(0, lureSpeed);
         this.entityBonus = Math.max(0, entityBonus);
+        this.doubled = doubled;
         this.lineColor = color;
     }
 
     public CustomFishingHook(EntityType<? extends CustomFishingHook> entityType, Level level) {
-        this(entityType, level, 0, 0, 0, FastColor.ARGB32.color(0, 0, 0));
+        this(entityType, level, 0, 0, 0, false, FastColor.ARGB32.color(0, 0, 0));
     }
 
-    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed, int entityBonus, int color) {
-        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed, entityBonus, color);
+    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed, int entityBonus, boolean doubled, int color) {
+        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed, entityBonus, doubled, color);
         this.setOwner(player);
         float f = player.getXRot();
         float f1 = player.getYRot();
