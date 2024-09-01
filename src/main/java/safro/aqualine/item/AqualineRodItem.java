@@ -25,6 +25,7 @@ import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.FishingAttributes;
+import safro.aqualine.api.RodStats;
 import safro.aqualine.entity.CustomFishingHook;
 import safro.aqualine.registry.ItemRegistry;
 
@@ -82,7 +83,15 @@ public class AqualineRodItem extends FishingRodItem {
                 ServerLevel serverlevel = (ServerLevel)level;
                 int j = this.getFishingSpeed(player);
                 int k = this.getFishingLuck(serverlevel, itemstack, player);
-                level.addFreshEntity(new CustomFishingHook(player, level, k, j, this.entityBonus, BaitItem.searchAndConsume(ItemRegistry.SHINY_BAIT.get(), player), this.lineColor));
+                RodStats rodStats = RodStats.create().with("LureSpeed", j).with("Luck", k).with("EntityBonus", this.entityBonus);
+                if (BaitItem.searchAndConsume(ItemRegistry.SHINY_BAIT.get(), player)) {
+                    rodStats.with("DoubleChance", 40);
+                }
+                if (BaitItem.searchAndConsume(ItemRegistry.ENCHANTED_BAIT.get(), player)) {
+                    rodStats.with("EnchantChance", 80);
+                }
+
+                level.addFreshEntity(new CustomFishingHook(player, level, rodStats, this.lineColor));
             }
 
             player.awardStat(Stats.ITEM_USED.get(this));

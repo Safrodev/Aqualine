@@ -8,6 +8,7 @@
   "item.aqualine.sweet_bait": "Sweet Bait",
   "item.aqualine.shiny_bait": "Shiny Bait",
   "item.aqualine.shadow_bait": "Shadow Bait",
+  "item.aqualine.enchanted_bait": "Enchanted Bait",
 
   "aqualine.fishing_speed": "Fishing Speed",
 
@@ -17,9 +18,10 @@
   "text.aqualine.frozen_rod": "§3+2 Fishing Speed §7in Cold Biomes",
   "text.aqualine.undead_rod": "§3+30% §7chance to fish up sea creatures",
   "text.aqualine.fish_charm": "§3+%s Luck §7when in inventory while fishing",
-  "text.aqualine.sweet_bait": "§6+1 Fishing Speed",
-  "text.aqualine.shadow_bait": "§6x2 Luck at Night",
-  "text.aqualine.shiny_bait": "§640% chance to double fished items",
+  "text.aqualine.sweet_bait": "+1 Fishing Speed",
+  "text.aqualine.shadow_bait": "x2 Luck at Night",
+  "text.aqualine.shiny_bait": "20% chance to double fished items",
+  "text.aqualine.enchanted_bait": "Increases chance of fishing up enchanted items",
 
   "command.aqualine.get_level": "You are level %s (%s/%s)",
   "command.aqualine.set_level": "Set %s player(s) to fishing level %s"

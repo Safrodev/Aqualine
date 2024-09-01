@@ -4,6 +4,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
@@ -14,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
-import safro.aqualine.Aqualine;
 import safro.aqualine.entity.CustomFishingHook;
 
 public class ItemFishResult extends FishResult {
@@ -32,9 +33,13 @@ public class ItemFishResult extends FishResult {
     @Override
     public void execute(ServerLevel world, Player player, CustomFishingHook hook) {
         ItemStack stack = this.getStack(world);
-        if (hook.doubled && player.getRandom().nextFloat() < 0.4F) {
-            Aqualine.LOGGER.info("Doubled shiny bait");
+        runOn(stack, world, player, hook);
+    }
+
+    protected static void runOn(ItemStack stack, ServerLevel world, Player player, CustomFishingHook hook) {
+        if (hook.getRodStats().has("DoubleChance") && (player.getRandom().nextDouble() * 100) < hook.getRodStats().get("DoubleChance")) {
             stack.setCount(stack.getCount() * 2);
+            world.playSound(null, player, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 1.5F);
         }
         ItemFishedEvent event = new ItemFishedEvent(NonNullList.of(ItemStack.EMPTY, stack), hook.onGround() ? 2 : 1, hook);
         NeoForge.EVENT_BUS.post(event);
@@ -54,7 +59,7 @@ public class ItemFishResult extends FishResult {
         CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayer)player, stack, hook, event.getDrops());
     }
 
-    private ItemStack getStack(Level world) {
+    protected ItemStack getStack(Level world) {
         ItemStack stack = new ItemStack(this.item);
         if (this.min < this.max) {
             stack.setCount(Mth.randomBetweenInclusive(world.getRandom(), this.min, this.max));

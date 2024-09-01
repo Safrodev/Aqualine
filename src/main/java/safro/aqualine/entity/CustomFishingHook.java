@@ -38,6 +38,7 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.EventHooks;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.FishingManager;
+import safro.aqualine.api.RodStats;
 import safro.aqualine.registry.EntityRegistry;
 
 import javax.annotation.Nullable;
@@ -60,31 +61,25 @@ public class CustomFishingHook extends FishingHook {
     @Nullable
     private Entity hookedIn;
     private FishHookState currentState;
-    public final int luck;
-    private final int lureSpeed;
-    public final int entityBonus;
-    public final boolean doubled;
     public int lineColor;
+    private final RodStats rodStats;
 
-    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, int luck, int lureSpeed, int entityBonus, boolean doubled, int color) {
+    private CustomFishingHook(EntityType<? extends FishingHook> entityType, Level level, RodStats rodStats, int color) {
         super(entityType, level);
         this.syncronizedRandom = RandomSource.create();
         this.openWater = true;
         this.currentState = FishHookState.FLYING;
         this.noCulling = true;
-        this.luck = Math.max(0, luck);
-        this.lureSpeed = Math.max(0, lureSpeed);
-        this.entityBonus = Math.max(0, entityBonus);
-        this.doubled = doubled;
         this.lineColor = color;
+        this.rodStats = rodStats;
     }
 
     public CustomFishingHook(EntityType<? extends CustomFishingHook> entityType, Level level) {
-        this(entityType, level, 0, 0, 0, false, FastColor.ARGB32.color(0, 0, 0));
+        this(entityType, level, RodStats.create(), FastColor.ARGB32.color(0, 0, 0));
     }
 
-    public CustomFishingHook(Player player, Level level, int luck, int lureSpeed, int entityBonus, boolean doubled, int color) {
-        this(EntityRegistry.FISHING_HOOK.get(), level, luck, lureSpeed, entityBonus, doubled, color);
+    public CustomFishingHook(Player player, Level level, RodStats rodStats, int color) {
+        this(EntityRegistry.FISHING_HOOK.get(), level, rodStats, color);
         this.setOwner(player);
         float f = player.getXRot();
         float f1 = player.getYRot();
@@ -104,6 +99,10 @@ public class CustomFishingHook extends FishingHook {
         this.setXRot((float)(Mth.atan2(vec3.y, vec3.horizontalDistance()) * 180.0 / 3.1415927410125732));
         this.yRotO = this.getYRot();
         this.xRotO = this.getXRot();
+    }
+
+    public RodStats getRodStats() {
+        return this.rodStats;
     }
 
     @Override
@@ -376,10 +375,9 @@ public class CustomFishingHook extends FishingHook {
                 }
             } else {
                 this.timeUntilLured = Mth.nextInt(this.random, 200, 650);
-                this.timeUntilLured -= this.lureSpeed;
+                this.timeUntilLured -= this.rodStats.has("LureSpeed") ? this.rodStats.get("LureSpeed") : 0;
             }
         }
-
     }
 
     private boolean calculateOpenWater(BlockPos pos) {
@@ -428,12 +426,16 @@ public class CustomFishingHook extends FishingHook {
         return this.openWater;
     }
 
+    @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("LineColor", this.lineColor);
+        this.rodStats.write(compound);
     }
 
+    @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         this.lineColor = compound.getInt("LineColor");
+        this.rodStats.load(compound);
     }
 
     public int retrieve(ItemStack stack) {

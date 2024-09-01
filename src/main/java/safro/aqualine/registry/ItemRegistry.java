@@ -1,5 +1,6 @@
 package safro.aqualine.registry;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -29,6 +30,7 @@ public class ItemRegistry {
     public static final DeferredHolder<Item, BaitItem> SWEET_BAIT = ITEMS.register("sweet_bait", () -> new BaitItem(new Item.Properties(), "text.aqualine.sweet_bait"));
     public static final DeferredHolder<Item, BaitItem> SHADOW_BAIT = ITEMS.register("shadow_bait", () -> new BaitItem(new Item.Properties(), "text.aqualine.shadow_bait"));
     public static final DeferredHolder<Item, BaitItem> SHINY_BAIT = ITEMS.register("shiny_bait", () -> new BaitItem(new Item.Properties(), "text.aqualine.shiny_bait"));
+    public static final DeferredHolder<Item, BaitItem> ENCHANTED_BAIT = ITEMS.register("enchanted_bait", () -> new BaitItem(new Item.Properties().component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true), "text.aqualine.enchanted_bait"));
 
     private static Item.Properties withDamage(int dmg) {
         return new Item.Properties().durability(dmg);

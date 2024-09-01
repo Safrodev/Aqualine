@@ -48,7 +48,7 @@ public class CommonEvents {
 
     @SubscribeEvent
     public static void addListeners(AddReloadListenerEvent event) {
-        event.addListener(new FishingResourceListener("fishing"));
+        event.addListener(new FishingResourceListener("fishing", event.getRegistryAccess()));
     }
 
     @SubscribeEvent
