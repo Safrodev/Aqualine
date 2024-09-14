@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.FishingAttributes;
 import safro.aqualine.api.RodStats;
-import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.entity.projectile.CustomFishingHook;
 import safro.aqualine.registry.ItemRegistry;
 
 import java.util.List;

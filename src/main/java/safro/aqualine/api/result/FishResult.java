@@ -2,7 +2,7 @@ package safro.aqualine.api.result;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
-import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.entity.projectile.CustomFishingHook;
 
 public abstract class FishResult {
     private final Rarity rarity;

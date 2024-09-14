@@ -13,14 +13,12 @@ import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.ItemAbilities;
-import safro.aqualine.Aqualine;
-import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.entity.projectile.CustomFishingHook;
 
 @OnlyIn(Dist.CLIENT)
 public class CustomFishingHookRenderer extends EntityRenderer<CustomFishingHook> {

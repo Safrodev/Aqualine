@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.entity.projectile.CustomFishingHook;
 
 import java.util.Optional;
 

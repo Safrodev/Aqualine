@@ -1,5 +1,6 @@
 package safro.aqualine;
 
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -10,16 +11,28 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import safro.aqualine.client.model.AnchorModel;
+import safro.aqualine.client.render.ALHumanoidRenderer;
+import safro.aqualine.client.render.AnchorRenderer;
 import safro.aqualine.client.render.CustomFishingHookRenderer;
 import safro.aqualine.registry.EntityRegistry;
 import safro.aqualine.registry.ItemRegistry;
 
 @EventBusSubscriber(modid = Aqualine.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class AqualineClient {
+    public static final ModelLayerLocation ANCHOR_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "anchor"), "main");
 
     @SubscribeEvent
     public static void registerRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegistry.FISHING_HOOK.get(), CustomFishingHookRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.ANCHOR.get(), AnchorRenderer::new);
+
+        event.registerEntityRenderer(EntityRegistry.BUCCANEER.get(), context -> new ALHumanoidRenderer<>(ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "textures/entity/headless_buccaneer.png"), context));
+    }
+
+    @SubscribeEvent
+    public static void registerModelLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ANCHOR_LAYER, AnchorModel::createBodyLayer);
     }
 
     @SubscribeEvent

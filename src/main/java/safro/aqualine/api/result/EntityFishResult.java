@@ -5,7 +5,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.Fishable;
-import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.entity.projectile.CustomFishingHook;
 
 public class EntityFishResult extends FishResult {
     private final EntityType<?> entityType;

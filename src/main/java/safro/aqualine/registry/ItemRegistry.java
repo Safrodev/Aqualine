@@ -8,14 +8,17 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.FishingAttributes;
+import safro.aqualine.item.AnchorItem;
 import safro.aqualine.item.AqualineRodItem;
 import safro.aqualine.item.BaitItem;
+import safro.aqualine.item.FishingCharmItem;
 
 public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, Aqualine.MODID);
@@ -26,6 +29,14 @@ public class ItemRegistry {
     public static final DeferredHolder<Item, AqualineRodItem> CRYSTAL_ROD = ITEMS.register("crystal_rod", () -> new AqualineRodItem(withDamage(460).attributes(createAttributes(0, 3)), FastColor.ARGB32.color(177, 34, 107)));
     public static final DeferredHolder<Item, AqualineRodItem> UNDEAD_ROD = ITEMS.register("undead_rod", () -> new AqualineRodItem(withDamage(400).attributes(createAttributes(2, 0)), null, -1, 30, "text.aqualine.undead_rod", FastColor.ARGB32.color(212, 133, 42)));
 
+    // Special Drops
+    public static final DeferredHolder<Item, AnchorItem> ANCHOR = ITEMS.register("anchor", () -> new AnchorItem(withDamage(125)));
+
+    // Charms
+    public static final DeferredHolder<Item, FishingCharmItem> LUCKY_CHARM = ITEMS.register("lucky_charm", () -> new FishingCharmItem(oneCount(), 1));
+    public static final DeferredHolder<Item, FishingCharmItem> FISHERMAN_CHARM = ITEMS.register("fisherman_charm", () -> new FishingCharmItem(oneCount().rarity(Rarity.UNCOMMON), 2));
+    public static final DeferredHolder<Item, FishingCharmItem> POSEIDON_CHARM = ITEMS.register("poseidon_charm", () -> new FishingCharmItem(oneCount().rarity(Rarity.RARE), 4));
+
     // Baits
     public static final DeferredHolder<Item, BaitItem> SWEET_BAIT = ITEMS.register("sweet_bait", () -> new BaitItem(new Item.Properties(), "text.aqualine.sweet_bait"));
     public static final DeferredHolder<Item, BaitItem> SHADOW_BAIT = ITEMS.register("shadow_bait", () -> new BaitItem(new Item.Properties(), "text.aqualine.shadow_bait"));
@@ -34,6 +45,10 @@ public class ItemRegistry {
 
     private static Item.Properties withDamage(int dmg) {
         return new Item.Properties().durability(dmg);
+    }
+
+    private static Item.Properties oneCount() {
+        return new Item.Properties().stacksTo(1);
     }
 
     private static ItemAttributeModifiers createAttributes(int speed, int luck) {

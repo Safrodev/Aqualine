@@ -12,7 +12,7 @@ import safro.aqualine.api.result.EnchantedItemFishResult;
 import safro.aqualine.api.result.EntityFishResult;
 import safro.aqualine.api.result.FishResult;
 import safro.aqualine.api.result.ItemFishResult;
-import safro.aqualine.entity.CustomFishingHook;
+import safro.aqualine.entity.projectile.CustomFishingHook;
 
 import java.util.ArrayList;
 import java.util.Collection;

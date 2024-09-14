@@ -1,4 +1,4 @@
-package safro.aqualine.entity;
+package safro.aqualine.entity.projectile;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
