@@ -17,14 +17,20 @@ public class AqualineConfig {
             .comment("Base chance to fish an entity instead of an item or event")
             .defineInRange("baseEntityChance", 50, 1, 100);
 
+//    private static final ModConfigSpec.BooleanValue OVERRIDE_VANILLA_ROD = BUILDER
+//            .comment("Whether the vanilla fishing rod behavior should be overridden to Aqualine's changes")
+//            .define("overrideRod", true);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 
     public static int baseEntityChance;
     public static int maxFishingLevel;
+//    public static boolean overrideRod;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         baseEntityChance = BASE_ENTITY_CHANCE.get();
         maxFishingLevel = MAX_LEVEL.get();
+//        overrideRod = OVERRIDE_VANILLA_ROD.get();
     }
 }

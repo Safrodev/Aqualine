@@ -1,8 +1,10 @@
 package safro.aqualine.entity;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -14,13 +16,19 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import safro.aqualine.entity.projectile.AnchorEntity;
+import safro.aqualine.registry.ItemRegistry;
+
+import javax.annotation.Nullable;
 
 public class BuccaneerEntity extends Monster implements RangedAttackMob {
 
@@ -38,7 +46,7 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new DistanceRangedGoal(this, 1.25, 15, 30.0F));
+        this.goalSelector.addGoal(1, new DistanceRangedGoal(this, 1.25, 50, 30.0F));
         this.goalSelector.addGoal(1, new DistanceMeleeGoal(this, 1.0, false));
         this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -56,7 +64,16 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
     @Override
     protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         super.populateDefaultEquipmentSlots(random, difficulty);
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemRegistry.ANCHOR));
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+        RandomSource randomsource = level.getRandom();
+        this.populateDefaultEquipmentSlots(randomsource, difficulty);
+        this.setDropChance(EquipmentSlot.MAINHAND, 2.0F);
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
     }
 
     @Override
@@ -91,8 +108,17 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
     }
 
     @Override
-    public void performRangedAttack(LivingEntity livingEntity, float v) {
-
+    public void performRangedAttack(LivingEntity target, float v) {
+        this.swing(InteractionHand.MAIN_HAND);
+        ItemStack stack = this.getMainHandItem().is(ItemRegistry.ANCHOR) ? this.getMainHandItem() : new ItemStack(ItemRegistry.ANCHOR);
+        AnchorEntity anchor = new AnchorEntity(this.level(), this, stack);
+        double d0 = target.getX() - this.getX();
+        double d1 = target.getY(0.3333333333333333) - anchor.getY();
+        double d2 = target.getZ() - this.getZ();
+        anchor.shoot(d0, d1, d2, 1.6F, Math.max((float)(9 - this.level().getDifficulty().getId() * 4), 0));
+        anchor.pickup = AbstractArrow.Pickup.DISALLOWED;
+        this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.level().addFreshEntity(anchor);
     }
 
     static class DistanceMeleeGoal extends MeleeAttackGoal {

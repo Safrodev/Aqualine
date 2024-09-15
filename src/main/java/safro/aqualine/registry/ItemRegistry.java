@@ -30,7 +30,7 @@ public class ItemRegistry {
     public static final DeferredHolder<Item, AqualineRodItem> UNDEAD_ROD = ITEMS.register("undead_rod", () -> new AqualineRodItem(withDamage(400).attributes(createAttributes(2, 0)), null, -1, 30, "text.aqualine.undead_rod", FastColor.ARGB32.color(212, 133, 42)));
 
     // Special Drops
-    public static final DeferredHolder<Item, AnchorItem> ANCHOR = ITEMS.register("anchor", () -> new AnchorItem(withDamage(125)));
+    public static final DeferredHolder<Item, AnchorItem> ANCHOR = ITEMS.register("anchor", () -> new AnchorItem(withDamage(125).attributes(AnchorItem.createAttributes())));
 
     // Charms
     public static final DeferredHolder<Item, FishingCharmItem> LUCKY_CHARM = ITEMS.register("lucky_charm", () -> new FishingCharmItem(oneCount(), 1));
