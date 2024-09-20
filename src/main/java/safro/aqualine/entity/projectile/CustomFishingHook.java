@@ -447,8 +447,7 @@ public class CustomFishingHook extends FishingHook {
                 CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayer)player, stack, this, Collections.emptyList());
                 this.level().broadcastEntityEvent(this, (byte)31);
                 i = this.hookedIn instanceof ItemEntity ? 3 : 5;
-            } else if (this.nibble > 0) {
-                FishingManager.handleRandomFish((ServerLevel) this.level(), player, this);
+            } else if (this.nibble > 0 && FishingManager.handleRandomFish((ServerLevel) this.level(), player, this)) {
                 i = 1;
             }
 

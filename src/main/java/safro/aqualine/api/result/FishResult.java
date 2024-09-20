@@ -1,7 +1,10 @@
 package safro.aqualine.api.result;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import safro.aqualine.AqualineConfig;
 import safro.aqualine.entity.projectile.CustomFishingHook;
 
 public abstract class FishResult {
@@ -23,20 +26,27 @@ public abstract class FishResult {
      */
     public abstract void execute(ServerLevel world, Player player, CustomFishingHook hook);
 
+    /**
+     * @return - The stack to display for JEI fishing loot
+     */
+    public abstract ItemStack getDisplayStack();
+
     public Rarity getRarity() {
         return rarity;
     }
 
     public enum Rarity {
-        COMMON(55),
-        UNCOMMON(30),
-        RARE(13),
-        LEGENDARY(2);
+        COMMON(AqualineConfig.commonWeight, "text.aqualine.rarity.common"),
+        UNCOMMON(AqualineConfig.uncommonWeight, "text.aqualine.rarity.uncommon"),
+        RARE(AqualineConfig.rareWeight, "text.aqualine.rarity.rare"),
+        LEGENDARY(AqualineConfig.legendaryWeight, "text.aqualine.rarity.legendary");
 
         private final int weight;
+        private final String key;
 
-        Rarity(int weight) {
+        Rarity(int weight, String key) {
             this.weight = weight;
+            this.key = key;
         }
 
         public static Rarity from(String str) {
@@ -45,6 +55,10 @@ public abstract class FishResult {
 
         public int getWeight() {
             return this.weight;
+        }
+
+        public String getTranslatedName() {
+            return Component.translatable(this.key).getString();
         }
     }
 }

@@ -25,6 +25,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import safro.aqualine.entity.ai.DistanceMeleeGoal;
 import safro.aqualine.entity.projectile.AnchorEntity;
 import safro.aqualine.registry.ItemRegistry;
 
@@ -38,16 +39,16 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
     }
 
     public static AttributeSupplier.Builder createBuccaneerAttributes() {
-        return createMonsterAttributes().add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.MAX_HEALTH, 32.0).add(Attributes.FOLLOW_RANGE, 45.0)
+        return createMonsterAttributes().add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.MAX_HEALTH, 26.0).add(Attributes.FOLLOW_RANGE, 45.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.28).add(Attributes.ATTACK_DAMAGE, 6.0).add(Attributes.ARMOR, 2.0)
-                .add(NeoForgeMod.SWIM_SPEED, 2.0).add(Attributes.WATER_MOVEMENT_EFFICIENCY, 1.0).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
+                .add(NeoForgeMod.SWIM_SPEED, 2.0).add(Attributes.WATER_MOVEMENT_EFFICIENCY, 1.0).add(Attributes.KNOCKBACK_RESISTANCE, 0.8);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new DistanceRangedGoal(this, 1.25, 50, 30.0F));
-        this.goalSelector.addGoal(1, new DistanceMeleeGoal(this, 1.0, false));
+        this.goalSelector.addGoal(1, new DistanceMeleeGoal(this, 1.4, false, 8));
         this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -119,23 +120,6 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
         anchor.pickup = AbstractArrow.Pickup.DISALLOWED;
         this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level().addFreshEntity(anchor);
-    }
-
-    static class DistanceMeleeGoal extends MeleeAttackGoal {
-        public DistanceMeleeGoal(PathfinderMob mob, double speedModifier, boolean followingTargetEvenIfNotSeen) {
-            super(mob, speedModifier, followingTargetEvenIfNotSeen);
-        }
-
-        @Override
-        public boolean canUse() {
-            LivingEntity livingEntity = mob.getTarget();
-            if (super.canUse()) {
-                if (livingEntity != null && livingEntity.isAlive()) {
-                    return mob.distanceTo(livingEntity) < 5;
-                }
-            }
-            return false;
-        }
     }
 
     class DistanceRangedGoal extends RangedAttackGoal {

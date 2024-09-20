@@ -10,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import safro.aqualine.Aqualine;
 import safro.aqualine.entity.BuccaneerEntity;
+import safro.aqualine.entity.GhostCaptainEntity;
 import safro.aqualine.entity.projectile.AnchorEntity;
 import safro.aqualine.entity.projectile.CustomFishingHook;
 
@@ -22,9 +23,11 @@ public class EntityRegistry {
 
     // Mobs
     public static final DeferredHolder<EntityType<?>, EntityType<BuccaneerEntity>> BUCCANEER = ENTITIES.register("headless_buccaneer", () -> EntityType.Builder.of(BuccaneerEntity::new, MobCategory.MISC).sized(0.6F, 1.95F).eyeHeight(1.74F).passengerAttachments(2.0125F).ridingOffset(-0.7F).clientTrackingRange(8).build("headless_buccaneer"));
+    public static final DeferredHolder<EntityType<?>, EntityType<GhostCaptainEntity>> GHOST_CAPTAIN = ENTITIES.register("ghost_captain", () -> EntityType.Builder.of(GhostCaptainEntity::new, MobCategory.MISC).sized(0.6F, 1.95F).eyeHeight(1.74F).clientTrackingRange(10).build("ghost_captain"));
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(BUCCANEER.get(), BuccaneerEntity.createBuccaneerAttributes().build());
+        event.put(GHOST_CAPTAIN.get(), GhostCaptainEntity.createCaptainAttributes().build());
     }
 }

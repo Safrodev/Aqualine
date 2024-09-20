@@ -17,7 +17,7 @@ import safro.aqualine.Aqualine;
 import java.util.List;
 
 public class FishingCharmItem extends Item {
-    private static final ResourceLocation MODIFIER = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "fishing_charm");
+    private static final ResourceLocation MODIFIER = Aqualine.id("fishing_charm");
     private final int luck;
 
     public FishingCharmItem(Properties properties, int luck) {

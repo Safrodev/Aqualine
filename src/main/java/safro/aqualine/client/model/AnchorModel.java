@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import safro.aqualine.Aqualine;
 
 public class AnchorModel extends Model {
-	public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "textures/entity/anchor.png");
+	public static final ResourceLocation TEXTURE = Aqualine.id("textures/entity/anchor.png");
 	private final ModelPart root;
 
 	public AnchorModel(ModelPart root) {

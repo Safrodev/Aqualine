@@ -5,6 +5,7 @@
   "item.aqualine.frozen_rod": "Frozen Rod",
   "item.aqualine.crystal_rod": "Crystal Rod",
   "item.aqualine.undead_rod": "Undead Rod",
+  "item.aqualine.angler_rod": "Angler Rod",
   "item.aqualine.sweet_bait": "Sweet Bait",
   "item.aqualine.shiny_bait": "Shiny Bait",
   "item.aqualine.shadow_bait": "Shadow Bait",
@@ -13,8 +14,11 @@
   "item.aqualine.fisherman_charm": "Fisherman's Charm",
   "item.aqualine.poseidon_charm": "Charm of Poseidon",
   "item.aqualine.anchor": "Rusty Anchor",
+  "item.aqualine.buccaneer_spawn_egg": "Headless Buccaneer Spawn Egg",
+  "item.aqualine.ghost_captain_spawn_egg": "Ghost Captain Spawn Egg",
 
   "entity.aqualine.headless_buccaneer": "Headless Buccaneer",
+  "entity.aqualine.ghost_captain": "Ghost Captain",
 
   "aqualine.fishing_speed": "Fishing Speed",
 
@@ -28,6 +32,14 @@
   "text.aqualine.shadow_bait": "x2 Luck at Night",
   "text.aqualine.shiny_bait": "20% chance to double fished items",
   "text.aqualine.enchanted_bait": "Increases chance of fishing up enchanted items",
+
+  "text.aqualine.rarity.common": "Common",
+  "text.aqualine.rarity.uncommon": "Uncommon",
+  "text.aqualine.rarity.rare": "Rare",
+  "text.aqualine.rarity.legendary": "Legendary",
+  "text.aqualine.jei.loot": "Fishing Loot",
+  "text.aqualine.jei.rarity": "Rarity: %s",
+  "text.aqualine.jei.count": "Count: %s-%s",
 
   "command.aqualine.get_level": "You are level %s (%s/%s)",
   "command.aqualine.set_level": "Set %s player(s) to fishing level %s"

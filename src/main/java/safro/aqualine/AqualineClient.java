@@ -15,12 +15,13 @@ import safro.aqualine.client.model.AnchorModel;
 import safro.aqualine.client.render.ALHumanoidRenderer;
 import safro.aqualine.client.render.AnchorRenderer;
 import safro.aqualine.client.render.CustomFishingHookRenderer;
+import safro.aqualine.client.render.GhostCaptainRenderer;
 import safro.aqualine.registry.EntityRegistry;
 import safro.aqualine.registry.ItemRegistry;
 
 @EventBusSubscriber(modid = Aqualine.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class AqualineClient {
-    public static final ModelLayerLocation ANCHOR_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "anchor"), "main");
+    public static final ModelLayerLocation ANCHOR_LAYER = new ModelLayerLocation(Aqualine.id("anchor"), "main");
 
     @SubscribeEvent
     public static void registerRenders(EntityRenderersEvent.RegisterRenderers event) {
@@ -28,6 +29,7 @@ public class AqualineClient {
         event.registerEntityRenderer(EntityRegistry.ANCHOR.get(), AnchorRenderer::new);
 
         event.registerEntityRenderer(EntityRegistry.BUCCANEER.get(), context -> new ALHumanoidRenderer<>(ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "textures/entity/headless_buccaneer.png"), context));
+        event.registerEntityRenderer(EntityRegistry.GHOST_CAPTAIN.get(), GhostCaptainRenderer::new);
     }
 
     @SubscribeEvent
@@ -42,6 +44,7 @@ public class AqualineClient {
             rodProperty(ItemRegistry.FROZEN_ROD.get());
             rodProperty(ItemRegistry.CRYSTAL_ROD.get());
             rodProperty(ItemRegistry.UNDEAD_ROD.get());
+            rodProperty(ItemRegistry.ANGLER_ROD.get());
         });
     }
 

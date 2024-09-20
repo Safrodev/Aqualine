@@ -1,6 +1,7 @@
 package safro.aqualine;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -44,5 +45,9 @@ public class Aqualine {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+    }
+
+    public static ResourceLocation id(String str) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, str);
     }
 }

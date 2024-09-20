@@ -1,8 +1,14 @@
 package safro.aqualine.api.result;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
 import safro.aqualine.Aqualine;
 import safro.aqualine.api.Fishable;
 import safro.aqualine.entity.projectile.CustomFishingHook;
@@ -13,6 +19,14 @@ public class EntityFishResult extends FishResult {
     public EntityFishResult(EntityType<?> entityType, String rarity) {
         super(rarity);
         this.entityType = entityType;
+    }
+
+    @Override
+    public ItemStack getDisplayStack() {
+        Item egg = SpawnEggItem.byId(this.entityType);
+        ItemStack stack = new ItemStack(egg != null ? egg : Items.BARRIER);
+        stack.set(DataComponents.CUSTOM_NAME, Component.translatable(this.entityType.getDescriptionId()));
+        return stack;
     }
 
     @Override

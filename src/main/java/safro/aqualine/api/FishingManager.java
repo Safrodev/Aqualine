@@ -39,7 +39,6 @@ public class FishingManager {
         if (!LOOT.isEmpty() && !ENTITIES.isEmpty()) {
             int entityBonus = hook.getRodStats().getOrNone("EntityBonus");
             int enchantBonus = hook.getRodStats().getOrNone("EnchantChance");
-            Aqualine.LOGGER.info("Entity Bonus: " + entityBonus + " Enchant: " + enchantBonus);
             FishResult result = selectRandom(level.getRandom(), hook.getRodStats().get("Luck"), entityBonus, enchantBonus);
             if (result != null) {
                 result.execute(level, player, hook);

@@ -16,7 +16,7 @@ import safro.aqualine.Aqualine;
 import safro.aqualine.AqualineConfig;
 
 public class FishingLevel implements INBTSerializable<CompoundTag> {
-    private static final ResourceLocation MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "fishing_level_boost");
+    private static final ResourceLocation MODIFIER_ID = Aqualine.id("fishing_level_boost");
     private int level;
     private int xpToNext;
     private int xp;

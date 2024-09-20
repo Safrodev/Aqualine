@@ -32,8 +32,8 @@ import safro.aqualine.registry.ItemRegistry;
 import java.util.List;
 
 public class AqualineRodItem extends FishingRodItem {
-    public static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "base_fishing_speed");
-    public static final ResourceLocation LUCK_ID = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "base_luck");
+    public static final ResourceLocation SPEED_ID = Aqualine.id("base_fishing_speed");
+    public static final ResourceLocation LUCK_ID = Aqualine.id("base_luck");
     private final int lineColor;
     @Nullable
     private final TagKey<Biome> biomeBonus;

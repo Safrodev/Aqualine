@@ -15,7 +15,7 @@ import safro.aqualine.client.model.AnchorModel;
 import safro.aqualine.entity.projectile.AnchorEntity;
 
 public class AnchorRenderer extends EntityRenderer<AnchorEntity> {
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Aqualine.MODID, "textures/entity/anchor.png");
+    public static final ResourceLocation TEXTURE = Aqualine.id("textures/entity/anchor.png");
     private final AnchorModel model;
 
     public AnchorRenderer(EntityRendererProvider.Context context) {

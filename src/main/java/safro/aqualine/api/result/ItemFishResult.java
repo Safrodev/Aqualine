@@ -19,15 +19,19 @@ import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import safro.aqualine.entity.projectile.CustomFishingHook;
 
 public class ItemFishResult extends FishResult {
-    private final Item item;
-    private final int min;
-    private final int max;
+    public final Item item;
+    public final int min;
+    public final int max;
 
     public ItemFishResult(Item item, String rarity, int min, int max) {
         super(rarity);
         this.item = item;
         this.min = min;
         this.max = max;
+    }
+
+    public ItemStack getDisplayStack() {
+        return new ItemStack(this.item);
     }
 
     @Override

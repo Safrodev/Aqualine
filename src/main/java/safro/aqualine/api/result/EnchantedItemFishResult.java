@@ -1,6 +1,7 @@
 package safro.aqualine.api.result;
 
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -21,6 +22,13 @@ public class EnchantedItemFishResult extends ItemFishResult {
         super(item, rarity, min, max);
         this.tag = tag;
         this.levels = levels;
+    }
+
+    @Override
+    public ItemStack getDisplayStack() {
+        ItemStack stack = super.getDisplayStack();
+        stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+        return stack;
     }
 
     @Override
