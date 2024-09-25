@@ -1,7 +1,7 @@
 {
   "type": "enchanted_item",
   "item": "minecraft:bow",
-  "count": 1,
+
   "rarity": "legendary",
   "levels": 28.0,
   "tag": "minecraft:on_random_loot"

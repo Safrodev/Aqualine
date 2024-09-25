@@ -8,6 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -36,7 +38,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import safro.aqualine.api.Fishable;
 import safro.aqualine.entity.ai.GoToWaterGoal;
-import safro.aqualine.entity.ai.SummonDrownedGoal;
+import safro.aqualine.entity.ai.SummonSilverfishGoal;
 
 import javax.annotation.Nullable;
 
@@ -50,14 +52,14 @@ public class GhostCaptainEntity extends Monster implements Fishable {
     }
 
     public static AttributeSupplier.Builder createCaptainAttributes() {
-        return createMonsterAttributes().add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.MAX_HEALTH, 50.0).add(Attributes.FOLLOW_RANGE, 64.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.25).add(Attributes.ATTACK_DAMAGE, 10.0).add(Attributes.ARMOR, 5.0)
+        return createMonsterAttributes().add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.MAX_HEALTH, 80.0).add(Attributes.FOLLOW_RANGE, 64.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.25).add(Attributes.ATTACK_DAMAGE, 10.0).add(Attributes.ARMOR, 8.0)
                 .add(NeoForgeMod.SWIM_SPEED, 2.0).add(Attributes.WATER_MOVEMENT_EFFICIENCY, 1.0).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new SummonDrownedGoal(this));
+        this.goalSelector.addGoal(1, new SummonSilverfishGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this,1.4, true));
         this.goalSelector.addGoal(2, new GoToWaterGoal(this, 1.1));
         this.goalSelector.addGoal(7, new RandomStrollGoal(this, 0.8));
@@ -140,6 +142,7 @@ public class GhostCaptainEntity extends Monster implements Fishable {
         boolean bl = super.doHurtTarget(entity);
         if (entity instanceof LivingEntity target) {
             target.addDeltaMovement(new Vec3(0.0D, -1.2D, 0.0D));
+            target.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 1));
         }
         return bl;
     }

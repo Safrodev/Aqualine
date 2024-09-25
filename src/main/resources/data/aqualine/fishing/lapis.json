@@ -2,8 +2,6 @@
   "type": "item",
   "item": "minecraft:lapis_lazuli",
   "rarity": "rare",
-  "count": {
-    "min": 1,
-    "max": 2
-  }
+  "min_inclusive": 1,
+  "max_inclusive": 2
 }

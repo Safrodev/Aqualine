@@ -5,8 +5,7 @@
       "modid": "grimoireofgaia"
     }
   ],
-
   "type": "entity",
-  "entity": "grimoireofgaia:cecaella",
+  "entity": "grimoireofgaia:cecaelia",
   "rarity": "rare"
 }

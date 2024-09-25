@@ -39,7 +39,7 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
     }
 
     public static AttributeSupplier.Builder createBuccaneerAttributes() {
-        return createMonsterAttributes().add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.MAX_HEALTH, 26.0).add(Attributes.FOLLOW_RANGE, 45.0)
+        return createMonsterAttributes().add(Attributes.STEP_HEIGHT, 1.0).add(Attributes.MAX_HEALTH, 34.0).add(Attributes.FOLLOW_RANGE, 45.0)
                 .add(Attributes.MOVEMENT_SPEED, 0.28).add(Attributes.ATTACK_DAMAGE, 6.0).add(Attributes.ARMOR, 2.0)
                 .add(NeoForgeMod.SWIM_SPEED, 2.0).add(Attributes.WATER_MOVEMENT_EFFICIENCY, 1.0).add(Attributes.KNOCKBACK_RESISTANCE, 0.8);
     }

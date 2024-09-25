@@ -3,24 +3,27 @@ package safro.aqualine.entity.ai;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.scores.PlayerTeam;
 import safro.aqualine.entity.GhostCaptainEntity;
 
-public class SummonDrownedGoal extends Goal {
+public class SummonSilverfishGoal extends Goal {
     protected int attackWarmupDelay;
     protected int nextAttackTickCount;
     private final GhostCaptainEntity mob;
 
-    public SummonDrownedGoal(GhostCaptainEntity entity) {
+    public SummonSilverfishGoal(GhostCaptainEntity entity) {
         this.mob = entity;
     }
 
@@ -49,11 +52,6 @@ public class SummonDrownedGoal extends Goal {
     }
 
     @Override
-    public void stop() {
-//        this.mob.getAttribute(Attributes.ARMOR).removeModifier()
-    }
-
-    @Override
     public void tick() {
         --this.attackWarmupDelay;
         if (this.attackWarmupDelay == 0 && this.mob.getTarget() != null) {
@@ -62,19 +60,17 @@ public class SummonDrownedGoal extends Goal {
 
             for(int i = 0; i < 3; ++i) {
                 BlockPos blockpos = this.mob.blockPosition().offset(-2 + this.mob.getRandom().nextInt(5), 1, -2 + this.mob.getRandom().nextInt(5));
-                Drowned drowned = EntityType.DROWNED.create(this.mob.level());
-                if (drowned != null) {
-                    drowned.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_HELMET));
-                    drowned.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TRIDENT));
-                    drowned.setBaby(false);
-                    drowned.moveTo(blockpos, 0.0F, 0.0F);
-                    drowned.finalizeSpawn(serverlevel, this.mob.level().getCurrentDifficultyAt(blockpos), MobSpawnType.MOB_SUMMONED, null);
-                    drowned.setTarget(this.mob.getTarget());
+                Silverfish silverfish = EntityType.SILVERFISH.create(this.mob.level());
+                if (silverfish != null) {
+                    silverfish.moveTo(blockpos, 0.0F, 0.0F);
+                    silverfish.finalizeSpawn(serverlevel, this.mob.level().getCurrentDifficultyAt(blockpos), MobSpawnType.MOB_SUMMONED, null);
+                    silverfish.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 3, true, false));
+                    silverfish.setTarget(this.mob.getTarget());
                     if (playerteam != null) {
-                        serverlevel.getScoreboard().addPlayerToTeam(drowned.getScoreboardName(), playerteam);
+                        serverlevel.getScoreboard().addPlayerToTeam(silverfish.getScoreboardName(), playerteam);
                     }
 
-                    serverlevel.addFreshEntityWithPassengers(drowned);
+                    serverlevel.addFreshEntityWithPassengers(silverfish);
                     serverlevel.gameEvent(GameEvent.ENTITY_PLACE, blockpos, GameEvent.Context.of(this.mob));
                 }
             }
