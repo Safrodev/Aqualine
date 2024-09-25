@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " GB",
+    "GB/",
+    "B /"
+  ],
+  "key": {
+    "/": {
+      "item": "aqualine:sea_steel"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "id": "aqualine:dragonfin_rod",
+    "count": 1
+  }
+}

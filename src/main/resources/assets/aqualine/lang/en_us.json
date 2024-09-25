@@ -6,6 +6,7 @@
   "item.aqualine.crystal_rod": "Crystal Rod",
   "item.aqualine.undead_rod": "Undead Rod",
   "item.aqualine.angler_rod": "Angler Rod",
+  "item.aqualine.dragonfin_rod": "Dragonfin Rod",
   "item.aqualine.sweet_bait": "Sweet Bait",
   "item.aqualine.shiny_bait": "Shiny Bait",
   "item.aqualine.shadow_bait": "Shadow Bait",
@@ -14,6 +15,7 @@
   "item.aqualine.fisherman_charm": "Fisherman's Charm",
   "item.aqualine.poseidon_charm": "Charm of Poseidon",
   "item.aqualine.anchor": "Rusty Anchor",
+  "item.aqualine.sea_steel": "Sea Steel",
   "item.aqualine.buccaneer_spawn_egg": "Headless Buccaneer Spawn Egg",
   "item.aqualine.ghost_captain_spawn_egg": "Ghost Captain Spawn Egg",
 
@@ -27,6 +29,7 @@
 
   "text.aqualine.frozen_rod": "§3+2 Fishing Speed §7in Cold Biomes",
   "text.aqualine.undead_rod": "§3+30% §7chance to fish up sea creatures",
+  "text.aqualine.dragonfin_rod": "§3+10% §7chance to fish up sea creatures",
   "text.aqualine.fish_charm": "+%s Luck §7when in inventory while fishing",
   "text.aqualine.sweet_bait": "+1 Fishing Speed",
   "text.aqualine.shadow_bait": "x2 Luck at Night",

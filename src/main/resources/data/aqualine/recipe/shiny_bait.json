@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#g#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:kelp"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "id": "aqualine:shiny_bait",
+    "count": 8
+  }
+}

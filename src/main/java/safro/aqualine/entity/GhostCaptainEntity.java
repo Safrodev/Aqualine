@@ -11,7 +11,10 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -26,13 +29,13 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import safro.aqualine.api.Fishable;
+import safro.aqualine.entity.ai.GoToWaterGoal;
 import safro.aqualine.entity.ai.SummonDrownedGoal;
 
 import javax.annotation.Nullable;
@@ -55,8 +58,8 @@ public class GhostCaptainEntity extends Monster implements Fishable {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new SummonDrownedGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this,0.5, true));
-        this.goalSelector.addGoal(5, new GoToWaterGoal(this, 1.0));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this,1.4, true));
+        this.goalSelector.addGoal(2, new GoToWaterGoal(this, 1.1));
         this.goalSelector.addGoal(7, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 12.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -139,35 +142,6 @@ public class GhostCaptainEntity extends Monster implements Fishable {
             target.addDeltaMovement(new Vec3(0.0D, -1.2D, 0.0D));
         }
         return bl;
-    }
-
-    static class GoToWaterGoal extends MoveToBlockGoal {
-        private final GhostCaptainEntity captain;
-
-        GoToWaterGoal(GhostCaptainEntity captain, double speedModifier) {
-            super(captain, speedModifier, 8, 2);
-            this.captain = captain;
-        }
-
-        public BlockPos getMoveToTarget() {
-            return this.blockPos;
-        }
-
-        public boolean canContinueToUse() {
-            return !this.captain.isInWater() && this.isValidTarget(this.captain.level(), this.blockPos);
-        }
-
-        public boolean canUse() {
-            return !this.captain.isInWater() && super.canUse();
-        }
-
-        public boolean shouldRecalculatePath() {
-            return this.tryTicks % 20 == 0;
-        }
-
-        protected boolean isValidTarget(LevelReader level, BlockPos pos) {
-            return level.getBlockState(pos).is(Blocks.WATER) && level.getBlockState(pos.above()).isPathfindable(PathComputationType.WATER);
-        }
     }
 
     static class WaterPathNavigation extends GroundPathNavigation {

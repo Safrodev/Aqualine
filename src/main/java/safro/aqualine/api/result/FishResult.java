@@ -35,6 +35,10 @@ public abstract class FishResult {
         return rarity;
     }
 
+    public String rarityRaw() {
+        return this.rarity.name();
+    }
+
     public enum Rarity {
         COMMON(AqualineConfig.commonWeight, "text.aqualine.rarity.common"),
         UNCOMMON(AqualineConfig.uncommonWeight, "text.aqualine.rarity.uncommon"),

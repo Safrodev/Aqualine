@@ -1,8 +1,11 @@
 package safro.aqualine.util;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.GsonHelper;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import org.jetbrains.annotations.Nullable;
 
 public class ALUtil {
 
@@ -16,5 +19,13 @@ public class ALUtil {
             int count = GsonHelper.getAsInt(json, name, 1);
             return Pair.of(count, count);
         }
+    }
+
+    @Nullable
+    public static ModLoadedCondition parseModLoaded(JsonElement jsonElement) {
+        if (GsonHelper.isArrayNode(jsonElement.getAsJsonObject(), "neoforge:conditions")) {
+            GsonHelper.getAsJsonArray(jsonElement.getAsJsonObject(), "neoforge:conditions");
+        }
+        return null;
     }
 }

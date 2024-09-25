@@ -18,19 +18,19 @@ public class AqualineConfig {
             .defineInRange("baseEntityChance", 50, 1, 100);
 
     private static final ModConfigSpec.IntValue COM_WEIGHT = BUILDER
-            .comment("Weight for common fishing loot/mobs. Ideally all rarity weights should add up to 100.")
+            .comment("Weight for common fishing loot/mobs. Ideally all rarity weights should add up to 100. Default: 55")
             .defineInRange("commonWeight", 55, 1, 100);
 
     private static final ModConfigSpec.IntValue UNCOM_WEIGHT = BUILDER
-            .comment("Weight for uncommon fishing loot/mobs. Ideally all rarity weights should add up to 100.")
+            .comment("Weight for uncommon fishing loot/mobs. Ideally all rarity weights should add up to 100. Default: 30")
             .defineInRange("uncommonWeight", 30, 1, 100);
 
     private static final ModConfigSpec.IntValue RARE_WEIGHT = BUILDER
-            .comment("Weight for rare fishing loot/mobs. Ideally all rarity weights should add up to 100.")
+            .comment("Weight for rare fishing loot/mobs. Ideally all rarity weights should add up to 100. Default: 13")
             .defineInRange("rareWeight", 13, 1, 100);
 
     private static final ModConfigSpec.IntValue LEG_WEIGHT = BUILDER
-            .comment("Weight for legendary fishing loot/mobs. Ideally all rarity weights should add up to 100.")
+            .comment("Weight for legendary fishing loot/mobs. Ideally all rarity weights should add up to 100. Default: 2")
             .defineInRange("legendaryWeight", 2, 1, 100);
 
     static final ModConfigSpec SPEC = BUILDER.build();

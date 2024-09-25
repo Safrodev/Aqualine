@@ -45,6 +45,7 @@ public class AqualineClient {
             rodProperty(ItemRegistry.CRYSTAL_ROD.get());
             rodProperty(ItemRegistry.UNDEAD_ROD.get());
             rodProperty(ItemRegistry.ANGLER_ROD.get());
+            rodProperty(ItemRegistry.DRAGONFIN_ROD.get());
         });
     }
 

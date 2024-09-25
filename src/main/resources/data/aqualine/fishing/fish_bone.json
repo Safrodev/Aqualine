@@ -1,0 +1,12 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "fishofthieves"
+    }
+  ],
+
+  "type": "item",
+  "item": "fishofthieves:fish_bone",
+  "rarity": "uncommon"
+}

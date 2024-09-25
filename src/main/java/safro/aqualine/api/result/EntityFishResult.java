@@ -1,7 +1,9 @@
 package safro.aqualine.api.result;
 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +21,15 @@ public class EntityFishResult extends FishResult {
     public EntityFishResult(EntityType<?> entityType, String rarity) {
         super(rarity);
         this.entityType = entityType;
+    }
+
+    public EntityFishResult(ResourceLocation id, String rarity) {
+        super(rarity);
+        this.entityType = BuiltInRegistries.ENTITY_TYPE.get(id);
+    }
+
+    public ResourceLocation getEntityId() {
+        return BuiltInRegistries.ENTITY_TYPE.getKey(this.entityType);
     }
 
     @Override

@@ -1,0 +1,12 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "grimoireofgaia"
+    }
+  ],
+
+  "type": "entity",
+  "entity": "grimoireofgaia:sharko",
+  "rarity": "uncommon"
+}

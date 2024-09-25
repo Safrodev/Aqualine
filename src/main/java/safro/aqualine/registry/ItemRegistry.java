@@ -29,7 +29,8 @@ public class ItemRegistry {
     public static final DeferredHolder<Item, AqualineRodItem> FROZEN_ROD = ITEMS.register("frozen_rod", () -> new AqualineRodItem(withDamage(210).attributes(createAttributes(1, 0)), Tags.Biomes.IS_COLD, 2, "text.aqualine.frozen_rod", DyeColor.LIGHT_BLUE.getMapColor().col));
     public static final DeferredHolder<Item, AqualineRodItem> CRYSTAL_ROD = ITEMS.register("crystal_rod", () -> new AqualineRodItem(withDamage(460).attributes(createAttributes(0, 5)), FastColor.ARGB32.color(177, 34, 107)));
     public static final DeferredHolder<Item, AqualineRodItem> UNDEAD_ROD = ITEMS.register("undead_rod", () -> new AqualineRodItem(withDamage(400).attributes(createAttributes(2, 0)), null, -1, 30, "text.aqualine.undead_rod", FastColor.ARGB32.color(212, 133, 42)));
-    public static final DeferredHolder<Item, AqualineRodItem> ANGLER_ROD = ITEMS.register("angler_rod", () -> new AqualineRodItem(withDamage(600).attributes(createAttributes(4, 3)), FastColor.ARGB32.color(26, 109, 63)));
+    public static final DeferredHolder<Item, AqualineRodItem> ANGLER_ROD = ITEMS.register("angler_rod", () -> new AqualineRodItem(withDamage(600).attributes(createAttributes(4, 3)).rarity(Rarity.RARE), FastColor.ARGB32.color(26, 109, 63)));
+    public static final DeferredHolder<Item, AqualineRodItem> DRAGONFIN_ROD = ITEMS.register("dragonfin_rod", () -> new AqualineRodItem(withDamage(750).attributes(createAttributes(5, 4)).rarity(Rarity.EPIC), null, -1, 10, "text.aqualine.dragonfin_rod", FastColor.ARGB32.color(223, 71, 12)));
 
     // Special Items
     public static final DeferredHolder<Item, AnchorItem> ANCHOR = ITEMS.register("anchor", () -> new AnchorItem(withDamage(125).attributes(AnchorItem.createAttributes())));
@@ -46,6 +47,7 @@ public class ItemRegistry {
     public static final DeferredHolder<Item, BaitItem> ENCHANTED_BAIT = ITEMS.register("enchanted_bait", () -> new BaitItem(new Item.Properties().component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true), "text.aqualine.enchanted_bait"));
 
     // Misc
+    public static final DeferredHolder<Item, Item> SEA_STEEL = ITEMS.register("sea_steel", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, SpawnEggItem> BUCCANEER_SPAWN_EGG = ITEMS.register("buccaneer_spawn_egg", () -> new SpawnEggItem(EntityRegistry.BUCCANEER.get(), 0x807355, 0x7488b0, new Item.Properties()));
     public static final DeferredHolder<Item, SpawnEggItem> GHOST_CAPTAIN_SPAWN_EGG = ITEMS.register("ghost_captain_spawn_egg", () -> new SpawnEggItem(EntityRegistry.GHOST_CAPTAIN.get(), 0x7e2626, 0x57d8de, new Item.Properties()));
 

@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Mth;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,14 +20,20 @@ import safro.aqualine.entity.projectile.CustomFishingHook;
 
 public class ItemFishResult extends FishResult {
     public final Item item;
-    public final int min;
-    public final int max;
+    public final IntProvider range;
 
-    public ItemFishResult(Item item, String rarity, int min, int max) {
+    public ItemFishResult(Item item, String rarity, IntProvider range) {
         super(rarity);
         this.item = item;
-        this.min = min;
-        this.max = max;
+        this.range = range;
+    }
+
+    public IntProvider range() {
+        return this.range;
+    }
+
+    public Item item() {
+        return this.item;
     }
 
     public ItemStack getDisplayStack() {
@@ -65,9 +71,7 @@ public class ItemFishResult extends FishResult {
 
     protected ItemStack getStack(Level world) {
         ItemStack stack = new ItemStack(this.item);
-        if (this.min < this.max) {
-            stack.setCount(Mth.randomBetweenInclusive(world.getRandom(), this.min, this.max));
-        }
+        stack.setCount(this.range.sample(world.getRandom()));
         return stack;
     }
 }

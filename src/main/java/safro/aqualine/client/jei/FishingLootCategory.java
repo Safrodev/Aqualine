@@ -61,11 +61,11 @@ public class FishingLootCategory implements IRecipeCategory<FishResult> {
 
         String rarity = recipe.getRarity().getTranslatedName();
         String text = Component.translatable("text.aqualine.jei.rarity", rarity).getString();
-        boolean range = recipe instanceof ItemFishResult result && result.min != result.max;
+        boolean range = recipe instanceof ItemFishResult result && result.range.getMinValue() != result.range.getMaxValue();
         guiGraphics.drawString(minecraft.font, text, 24, range ? 0 : 5, 0x292929, false);
 
         if (recipe instanceof ItemFishResult itemFishResult && range) {
-            String count = Component.translatable("text.aqualine.jei.count", itemFishResult.min, itemFishResult.max).getString();
+            String count = Component.translatable("text.aqualine.jei.count", itemFishResult.range.getMinValue(), itemFishResult.range.getMaxValue()).getString();
             guiGraphics.drawString(minecraft.font, count, 24, 12, 0x292929, false);
         }
     }

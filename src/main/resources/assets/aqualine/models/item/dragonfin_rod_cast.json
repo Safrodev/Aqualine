@@ -1,0 +1,6 @@
+{
+    "parent": "item/fishing_rod",
+    "textures": {
+        "layer0": "aqualine:item/dragonfin_rod_cast"
+    }
+}

@@ -43,7 +43,7 @@ public class SummonDrownedGoal extends Goal {
     @Override
     public void start() {
         this.attackWarmupDelay = this.adjustedTickDelay(20);
-        mob.getEntityData().set(GhostCaptainEntity.SUMMON_TICKS, 100);
+        mob.getEntityData().set(GhostCaptainEntity.SUMMON_TICKS, 50);
         this.nextAttackTickCount = mob.tickCount + 240;
         mob.playSound(SoundEvents.EVOKER_PREPARE_SUMMON, 1.0F, 1.0F);
     }

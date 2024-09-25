@@ -3,11 +3,14 @@ package safro.aqualine.api.result;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import safro.aqualine.entity.projectile.CustomFishingHook;
@@ -18,15 +21,26 @@ public class EnchantedItemFishResult extends ItemFishResult {
     private final TagKey<Enchantment> tag;
     private final int levels;
 
-    public EnchantedItemFishResult(Item item, TagKey<Enchantment> tag, int levels, String rarity, int min, int max) {
-        super(item, rarity, min, max);
-        this.tag = tag;
+    public EnchantedItemFishResult(Item item, String rarity, IntProvider range, ResourceLocation tag, int levels) {
+        super(item, rarity, range);
+        this.tag = TagKey.create(Registries.ENCHANTMENT, tag);
         this.levels = levels;
+    }
+
+    public ResourceLocation tagKey() {
+        return this.tag.location();
+    }
+
+    public int levels() {
+        return this.levels;
     }
 
     @Override
     public ItemStack getDisplayStack() {
         ItemStack stack = super.getDisplayStack();
+        if (stack.is(Items.BOOK)) {
+            stack = new ItemStack(Items.ENCHANTED_BOOK);
+        }
         stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
         return stack;
     }

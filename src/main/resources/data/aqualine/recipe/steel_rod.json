@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  /",
+    " /D",
+    "/ D"
+  ],
+  "key": {
+    "/": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "id": "aqualine:steel_rod",
+    "count": 1
+  }
+}

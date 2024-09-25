@@ -1,6 +1,7 @@
 package safro.aqualine.entity;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -120,6 +120,21 @@ public class BuccaneerEntity extends Monster implements RangedAttackMob {
         anchor.pickup = AbstractArrow.Pickup.DISALLOWED;
         this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level().addFreshEntity(anchor);
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.HUSK_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.HUSK_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.HUSK_DEATH;
     }
 
     class DistanceRangedGoal extends RangedAttackGoal {
