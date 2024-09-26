@@ -48,7 +48,7 @@ public class AnchorEntity extends AbstractArrow {
     @Override
     public void tick() {
         if (this.hooked != null && this.getOwner() != null) {
-            if (this.hooked != this.getOwner() && this.pullTime < 200 && !this.hooked.isRemoved() && this.hooked.level().dimension() == this.level().dimension()) {
+            if (this.hooked != this.getOwner() && this.pullTime < 160 && !this.hooked.isRemoved() && this.hooked.level().dimension() == this.level().dimension()) {
                 this.pullTime++;
                 this.setPos(this.hooked.getX(), this.hooked.getY(0.8), this.hooked.getZ());
 

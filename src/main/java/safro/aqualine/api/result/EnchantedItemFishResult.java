@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +22,7 @@ public class EnchantedItemFishResult extends ItemFishResult {
     private final TagKey<Enchantment> tag;
     private final int levels;
 
-    public EnchantedItemFishResult(Item item, String rarity, IntProvider range, ResourceLocation tag, int levels) {
+    public EnchantedItemFishResult(Item item, String rarity, UniformInt range, ResourceLocation tag, int levels) {
         super(item, rarity, range);
         this.tag = TagKey.create(Registries.ENCHANTMENT, tag);
         this.levels = levels;

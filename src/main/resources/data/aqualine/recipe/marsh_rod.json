@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  /",
+    "S/D",
+    "/ D"
+  ],
+  "key": {
+    "/": {
+      "item": "minecraft:mangrove_planks"
+    },
+    "D": {
+      "item": "minecraft:slime_block"
+    },
+    "S": {
+      "item": "minecraft:iron_sword"
+    }
+  },
+  "result": {
+    "id": "aqualine:marsh_rod",
+    "count": 1
+  }
+}

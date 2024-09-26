@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,15 +21,15 @@ import safro.aqualine.entity.projectile.CustomFishingHook;
 
 public class ItemFishResult extends FishResult {
     public final Item item;
-    public final IntProvider range;
+    public final UniformInt range;
 
-    public ItemFishResult(Item item, String rarity, IntProvider range) {
+    public ItemFishResult(Item item, String rarity, UniformInt range) {
         super(rarity);
         this.item = item;
         this.range = range;
     }
 
-    public IntProvider range() {
+    public UniformInt range() {
         return this.range;
     }
 

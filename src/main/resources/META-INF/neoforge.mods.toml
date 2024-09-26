@@ -4,13 +4,13 @@ loaderVersion="${loader_version_range}"
 
 license="${mod_license}"
 
-#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+issueTrackerURL="https://github.com/Safrodev/Aqualine/issues"
 
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/aqualine"
 #logoFile="examplemod.png" #optional
 authors="${mod_authors}"
 description='''${mod_description}'''

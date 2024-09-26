@@ -34,6 +34,7 @@ import java.util.List;
 public class AqualineRodItem extends FishingRodItem {
     public static final ResourceLocation SPEED_ID = Aqualine.id("base_fishing_speed");
     public static final ResourceLocation LUCK_ID = Aqualine.id("base_luck");
+    public static final ResourceLocation DAMAGE_ID = Aqualine.id("base_damage");
     private final int lineColor;
     @Nullable
     private final TagKey<Biome> biomeBonus;
@@ -81,7 +82,7 @@ public class AqualineRodItem extends FishingRodItem {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
             if (level instanceof ServerLevel) {
                 ServerLevel serverlevel = (ServerLevel)level;
-                int j = this.getFishingSpeed(player);
+                int j = (int)((this.getFishingSpeed(player) + EnchantmentHelper.getFishingTimeReduction(serverlevel, itemstack, player)) * 20.0F);
                 int k = this.getFishingLuck(serverlevel, itemstack, player);
                 RodStats rodStats = RodStats.create().with("LureSpeed", j).with("Luck", k).with("EntityBonus", this.entityBonus);
                 if (BaitItem.searchAndConsume(ItemRegistry.SHINY_BAIT.get(), player)) {
@@ -102,7 +103,7 @@ public class AqualineRodItem extends FishingRodItem {
     }
 
     private int getFishingSpeed(Player player) {
-        int speed = (int)(player.getAttributeValue(FishingAttributes.FISHING_SPEED) * 20.0F);
+        int speed = (int)(player.getAttributeValue(FishingAttributes.FISHING_SPEED));
         if (this.biomeBonus != null) {
             if (player.level().getBiome(player.getOnPos()).is(this.biomeBonus)) {
                 speed += this.speedBonus;

@@ -2,6 +2,8 @@
   "type": "item",
   "item": "minecraft:slime_ball",
   "rarity": "uncommon",
-  "min_inclusive": 1,
-  "max_inclusive": 3
+  "count": {
+    "min_inclusive": 1,
+    "max_inclusive": 3
+  }
 }

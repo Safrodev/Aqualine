@@ -25,12 +25,13 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, Aqualine.MODID);
 
     // Rods
-    public static final DeferredHolder<Item, AqualineRodItem> STEEL_ROD = ITEMS.register("steel_rod", () -> new AqualineRodItem(withDamage(150).attributes(createAttributes(1, 0))));
-    public static final DeferredHolder<Item, AqualineRodItem> FROZEN_ROD = ITEMS.register("frozen_rod", () -> new AqualineRodItem(withDamage(210).attributes(createAttributes(1, 0)), Tags.Biomes.IS_COLD, 2, "text.aqualine.frozen_rod", DyeColor.LIGHT_BLUE.getMapColor().col));
-    public static final DeferredHolder<Item, AqualineRodItem> CRYSTAL_ROD = ITEMS.register("crystal_rod", () -> new AqualineRodItem(withDamage(460).attributes(createAttributes(0, 5)), FastColor.ARGB32.color(177, 34, 107)));
-    public static final DeferredHolder<Item, AqualineRodItem> UNDEAD_ROD = ITEMS.register("undead_rod", () -> new AqualineRodItem(withDamage(400).attributes(createAttributes(2, 0)), null, -1, 30, "text.aqualine.undead_rod", FastColor.ARGB32.color(212, 133, 42)));
-    public static final DeferredHolder<Item, AqualineRodItem> ANGLER_ROD = ITEMS.register("angler_rod", () -> new AqualineRodItem(withDamage(600).attributes(createAttributes(4, 3)).rarity(Rarity.RARE), FastColor.ARGB32.color(26, 109, 63)));
-    public static final DeferredHolder<Item, AqualineRodItem> DRAGONFIN_ROD = ITEMS.register("dragonfin_rod", () -> new AqualineRodItem(withDamage(750).attributes(createAttributes(5, 4)).rarity(Rarity.EPIC), null, -1, 10, "text.aqualine.dragonfin_rod", FastColor.ARGB32.color(223, 71, 12)));
+    public static final DeferredHolder<Item, AqualineRodItem> STEEL_ROD = ITEMS.register("steel_rod", () -> new AqualineRodItem(withDamage(150).attributes(createAttributes(1, 0).build())));
+    public static final DeferredHolder<Item, AqualineRodItem> FROZEN_ROD = ITEMS.register("frozen_rod", () -> new AqualineRodItem(withDamage(210).attributes(createAttributes(1, 0).build()), Tags.Biomes.IS_COLD, 2, "text.aqualine.frozen_rod", DyeColor.LIGHT_BLUE.getMapColor().col));
+    public static final DeferredHolder<Item, AqualineRodItem> MARSH_ROD = ITEMS.register("marsh_rod", () -> new AqualineRodItem(withDamage(210).attributes(createAttributes(1, 0).add(Attributes.ATTACK_DAMAGE, new AttributeModifier(AqualineRodItem.DAMAGE_ID, 6, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()), Tags.Biomes.IS_SWAMP, 3, "text.aqualine.marsh_rod", DyeColor.GREEN.getMapColor().col));
+    public static final DeferredHolder<Item, AqualineRodItem> CRYSTAL_ROD = ITEMS.register("crystal_rod", () -> new AqualineRodItem(withDamage(460).attributes(createAttributes(0, 5).build()), FastColor.ARGB32.color(177, 34, 107)));
+    public static final DeferredHolder<Item, AqualineRodItem> UNDEAD_ROD = ITEMS.register("undead_rod", () -> new AqualineRodItem(withDamage(400).attributes(createAttributes(2, 0).build()), null, -1, 30, "text.aqualine.undead_rod", FastColor.ARGB32.color(212, 133, 42)));
+    public static final DeferredHolder<Item, AqualineRodItem> ANGLER_ROD = ITEMS.register("angler_rod", () -> new AqualineRodItem(withDamage(600).attributes(createAttributes(4, 3).build()).rarity(Rarity.RARE), FastColor.ARGB32.color(26, 109, 63)));
+    public static final DeferredHolder<Item, AqualineRodItem> DRAGONFIN_ROD = ITEMS.register("dragonfin_rod", () -> new AqualineRodItem(withDamage(750).attributes(createAttributes(5, 4).build()).rarity(Rarity.EPIC), null, -1, 10, "text.aqualine.dragonfin_rod", FastColor.ARGB32.color(223, 71, 12)));
 
     // Special Items
     public static final DeferredHolder<Item, AnchorItem> ANCHOR = ITEMS.register("anchor", () -> new AnchorItem(withDamage(125).attributes(AnchorItem.createAttributes())));
@@ -59,7 +60,7 @@ public class ItemRegistry {
         return new Item.Properties().stacksTo(1);
     }
 
-    private static ItemAttributeModifiers createAttributes(int speed, int luck) {
+    private static ItemAttributeModifiers.Builder createAttributes(int speed, int luck) {
         ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
         if (speed > 0) {
             builder.add(FishingAttributes.FISHING_SPEED, new AttributeModifier(AqualineRodItem.SPEED_ID, speed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
@@ -67,6 +68,8 @@ public class ItemRegistry {
         if (luck > 0) {
             builder.add(Attributes.LUCK, new AttributeModifier(AqualineRodItem.LUCK_ID, luck, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         }
-        return builder.build();
+        return builder;
     }
+
+
 }

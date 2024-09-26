@@ -42,6 +42,7 @@ public class AqualineClient {
         event.enqueueWork(() -> {
             rodProperty(ItemRegistry.STEEL_ROD.get());
             rodProperty(ItemRegistry.FROZEN_ROD.get());
+            rodProperty(ItemRegistry.MARSH_ROD.get());
             rodProperty(ItemRegistry.CRYSTAL_ROD.get());
             rodProperty(ItemRegistry.UNDEAD_ROD.get());
             rodProperty(ItemRegistry.ANGLER_ROD.get());

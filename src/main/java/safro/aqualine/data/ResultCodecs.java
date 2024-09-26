@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
 import safro.aqualine.api.result.EnchantedItemFishResult;
 import safro.aqualine.api.result.EntityFishResult;
@@ -19,7 +20,7 @@ public class ResultCodecs {
                     name -> BuiltInRegistries.ITEM.containsKey(name) ? DataResult.success(BuiltInRegistries.ITEM.get(name)) : DataResult.error(() -> "Could not find entity type: " + name),
                     BuiltInRegistries.ITEM::getKey).fieldOf("item").forGetter(ItemFishResult::item),
             Codec.STRING.fieldOf("rarity").forGetter(ItemFishResult::rarityRaw),
-            UniformInt.NON_NEGATIVE_CODEC.optionalFieldOf("count", ConstantInt.of(1)).forGetter(ItemFishResult::range)
+            IntProvider.validateCodec(1, Integer.MAX_VALUE, UniformInt.CODEC.codec()).optionalFieldOf("count", UniformInt.of(1, 1)).forGetter(ItemFishResult::range)
     ).apply(instance, ItemFishResult::new));
 
     public static final Codec<EnchantedItemFishResult> ENCHANTED_ITEM = RecordCodecBuilder.create(instance -> instance.group(
@@ -27,7 +28,7 @@ public class ResultCodecs {
                     name -> BuiltInRegistries.ITEM.containsKey(name) ? DataResult.success(BuiltInRegistries.ITEM.get(name)) : DataResult.error(() -> "Could not find entity type: " + name),
                     BuiltInRegistries.ITEM::getKey).fieldOf("item").forGetter(EnchantedItemFishResult::item),
             Codec.STRING.fieldOf("rarity").forGetter(EnchantedItemFishResult::rarityRaw),
-            UniformInt.NON_NEGATIVE_CODEC.optionalFieldOf("count", ConstantInt.of(1)).forGetter(EnchantedItemFishResult::range),
+            IntProvider.validateCodec(1, Integer.MAX_VALUE, UniformInt.CODEC.codec()).optionalFieldOf("count", UniformInt.of(1, 1)).forGetter(EnchantedItemFishResult::range),
             ResourceLocation.CODEC.fieldOf("tag").forGetter(EnchantedItemFishResult::tagKey),
             Codec.INT.fieldOf("levels").forGetter(EnchantedItemFishResult::levels)
     ).apply(instance, EnchantedItemFishResult::new));

@@ -1,6 +1,6 @@
 {
   "type": "enchanted_item",
-  "item": "minecraft:bow",
+  "item": "minecraft:trident",
   "rarity": "legendary",
   "levels": 28.0,
   "tag": "minecraft:on_random_loot"
